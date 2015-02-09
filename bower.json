@@ -1,0 +1,26 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "authors": [
+    "Dirk Luijk <dirk@luijkwebcreations.nl>"
+  ],
+  "description": "Frontend assets",
+  "main": "src/index.html",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.0",
+    "bootswatch": "~3.3.0",
+    "fontawesome": "~4.2.0",
+    "modernizr": "~2.8.3"
+  }
+}

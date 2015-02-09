@@ -1,0 +1,5 @@
+node_modules
+vendor
+dist
+src/assets/css/main.css
+.tmp
