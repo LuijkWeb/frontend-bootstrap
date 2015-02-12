@@ -37,6 +37,13 @@ gulp.task('images:media', function () {
 
 gulp.task('images', ['images:assets', 'images:media']);
 
+// Copy Web Fonts To Dist
+gulp.task('fonts', function () {
+    return gulp.src(['src/assets/fonts/**'])
+        .pipe(gulp.dest('dist/assets/fonts'))
+        .pipe($.size({title: 'fonts'}));
+});
+
 // Compile and Automatically Prefix Stylesheets
 gulp.task('styles', function () {
     // For best performance, don't add Sass partials to `gulp.src`
@@ -58,7 +65,7 @@ gulp.task('html:partials', function () {
             prefix: '@@',
             basepath: '@file'
         }))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest('.tmp'));
 });
 
 // Scan Your HTML For Assets & Optimize Them
@@ -111,5 +118,5 @@ gulp.task('serve:dist', ['default'], function () {
 
 // Build Production Files, the Default Task
 gulp.task('default', ['clean'], function() {
-    runSequence('bower', 'styles', 'html', 'images');
+    runSequence('bower', 'styles', 'html', 'images', 'fonts');
 });
