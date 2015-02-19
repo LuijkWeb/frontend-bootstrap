@@ -11,26 +11,27 @@ var gulp = require('gulp'),
 
 gulp.task('bower', function () {
     return bower()
-        .pipe(gulp.dest('src/vendor'));
+        .pipe(gulp.dest('src/vendor'))
+        .pipe(gulp.dest('dist/vendor'));
 });
 
 // Optimize Images
 gulp.task('images:assets', function () {
     return gulp.src('src/assets/img/**/*')
-        .pipe($.cache($.imagemin({
+        .pipe($.imagemin({
             progressive: true,
             interlaced: true
-        })))
+        }))
         .pipe(gulp.dest('dist/assets/img'))
         .pipe($.size({title: 'images (assets)'}));
 });
 
 gulp.task('images:media', function () {
     return gulp.src('src/media/images/**/*')
-        .pipe($.cache($.imagemin({
+        .pipe($.imagemin({
             progressive: true,
             interlaced: true
-        })))
+        }))
         .pipe(gulp.dest('dist/media/images'))
         .pipe($.size({title: 'images (media)'}));
 });
@@ -50,7 +51,7 @@ gulp.task('styles', function () {
     return gulp.src('src/assets/less/main.less')
         .pipe(less()
             .on('error', console.error.bind(console))
-        )
+    )
         .pipe(gulp.dest('.tmp/assets/css'))
         // Concatenate And Minify Styles
         .pipe($.if('*.css', $.csso()))
@@ -72,7 +73,7 @@ gulp.task('html:partials', function () {
 gulp.task('html:assets', function () {
     var assets = $.useref.assets({searchPath: '{.tmp,src}'});
 
-    return gulp.src('dist/*.html')
+    return gulp.src('.tmp/*.html')
         .pipe(assets)
         // Concatenate And Minify JavaScript
         .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
@@ -96,7 +97,7 @@ gulp.task('html', function() {
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 // Watch Files For Changes & Reload
-gulp.task('serve', ['styles'], function () {
+gulp.task('serve', ['default'], function () {
     browserSync({
         notify: false,
         server: ['.tmp', 'src']
@@ -117,6 +118,6 @@ gulp.task('serve:dist', ['default'], function () {
 });
 
 // Build Production Files, the Default Task
-gulp.task('default', ['clean'], function() {
-    runSequence('bower', 'styles', 'html', 'images', 'fonts');
+gulp.task('default', ['clean'], function(cb) {
+    runSequence('bower', 'styles', 'html', 'images', 'fonts', cb);
 });
