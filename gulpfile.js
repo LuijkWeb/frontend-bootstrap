@@ -51,7 +51,7 @@ gulp.task('styles', function () {
     return gulp.src('src/assets/less/main.less')
         .pipe(less()
             .on('error', console.error.bind(console))
-    )
+        )
         .pipe(gulp.dest('.tmp/assets/css'))
         // Concatenate And Minify Styles
         .pipe($.if('*.css', $.csso()))
